@@ -88,6 +88,7 @@ void DisplayUI::setup() {
             mode = DISPLAY_MODE::PACKETMONITOR;
         });
         addMenuNode(&mainMenu, D_CLOCK, &clockMenu); // CLOCK
+        addMenuNode(&mainMenu, D_SETTINGS, &SettingsMenu); // SETTINGS
 
 #ifdef HIGHLIGHT_LED
         addMenuNode(&mainMenu, D_LED, [this]() {     // LED
@@ -454,8 +455,18 @@ void DisplayUI::setup() {
             display.setTextAlignment(TEXT_ALIGN_CENTER);
         });
     });
-
-    // ===================== //
+    
+// SETTINGS MENU
+createMenu(&SettingsMenu, &mainMenu, [this]() {
+    addMenuNode(&SettingsMenu, [this]() { // *LED
+        return b2a(ledSelected) + str(D_SET_LED);
+    }, [this]() {     // LED
+        ledSelected = !ledSelected;
+        led_settings_t ledSettings = settings::getLEDSettings(); // Get the current LED settings
+        ledSettings.enabled = ledSelected; // Update the enabled field
+        settings::setLEDSettings(ledSettings); // Set the new LED settings
+    });
+});    
 
     // set current menu to main menu
     changeMenu(&mainMenu);
