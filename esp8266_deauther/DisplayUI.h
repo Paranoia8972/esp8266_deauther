@@ -154,10 +154,21 @@ class DisplayUI {
 
         Menu mainMenu;
 
+        // ====================== //
+        // SETTINGS MENU
+
+        bool ledSelected;
+        Menu SettingsMenu;
+
+        // ====================== //
+
         Menu scanMenu;
         Menu showMenu;
         Menu attackMenu;
         Menu clockMenu;
+
+        Menu settingsMenu;
+        Menu ledMenu;
 
         Menu apListMenu;
         Menu stationListMenu;
