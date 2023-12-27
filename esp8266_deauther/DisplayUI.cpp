@@ -459,14 +459,15 @@ void DisplayUI::setup() {
 // SETTINGS MENU
 createMenu(&SettingsMenu, &mainMenu, [this]() {
     addMenuNode(&SettingsMenu, [this]() { // *LED
-        return b2a(ledSelected) + str(D_SET_LED);
+        led_settings_t ledSettings = settings::getLEDSettings(); // Retrieve current LED settings
+        return b2a(ledSettings.enabled) + str(D_SET_LED);
     }, [this]() {     // LED
-        ledSelected = !ledSelected;
-        led_settings_t ledSettings = settings::getLEDSettings(); // Get the current LED settings
+        led_settings_t ledSettings = settings::getLEDSettings(); // Retrieve current LED settings
+        ledSelected = !ledSettings.enabled; // Toggle the LED state
         ledSettings.enabled = ledSelected; // Update the enabled field
-        settings::setLEDSettings(ledSettings); // Set the new LED settings
+        settings::setLEDSettings(ledSettings); // Save the new LED settings
     });
-});    
+}); 
 
     // set current menu to main menu
     changeMenu(&mainMenu);
